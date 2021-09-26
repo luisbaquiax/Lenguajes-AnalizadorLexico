@@ -32,7 +32,7 @@ public class AnalizaEstados {
         }
         return false;
     }
-
+    
     public String tipoTokenSegunEstado(int estadoActual) {
         String tipo = "";
         switch (estadoActual) {

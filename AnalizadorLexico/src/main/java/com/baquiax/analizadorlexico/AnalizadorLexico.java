@@ -18,27 +18,38 @@ public class AnalizadorLexico {
     private List<Token> tokens;
     private AnalizadorCaracter analizadorCaracter;
     private AnalizaEstados analizaEstados;
-    int estadoActual;
-    int posicion;
+    private int estadoActual;
+    private int posicion;
+    private int fila;
+    private int columna;
+    private List<CadenaError> listCadenaErrors;
 
     public AnalizadorLexico() {
         this.automata = new AFD();
-        this.tokens = new ArrayList<>();
         this.analizadorCaracter = new AnalizadorCaracter();
         this.analizaEstados = new AnalizaEstados();
+        this.tokens = new ArrayList<>();
+        this.listCadenaErrors = new ArrayList<>();
+        this.fila = 1;
+        this.columna = 1;
     }
 
     public void analizarTexto(String cadena) {
+
         System.out.println("Cadena " + cadena);
         while (posicion < cadena.length()) {
             getToken(cadena);
         }
+
         for (Token token : tokens) {
             System.out.println(token.toString());
-            for (String inf : token.getHistorial()) {
-                System.out.println(inf);
+            for (String s : token.getHistorial()) {
+                System.out.println(s.toString());
             }
-            System.out.println("");
+        }
+        System.out.println("Errores");
+        for (CadenaError e : listCadenaErrors) {
+            System.out.println(e.toString());
         }
     }
 
@@ -50,30 +61,46 @@ public class AnalizadorLexico {
         Token nuevoToken = new Token();
 
         while ((continuar) && (posicion < palabra.length())) {
+            if ((palabra.charAt(posicion) == '\n')) {
+                this.fila++;
+                this.columna = 0;
+            }
             if (Character.isSpaceChar(tmp = palabra.charAt(posicion)) || (palabra.charAt(posicion) == '\n') || (estadoActual == AFD.ESTADO_ERROR)) {
                 continuar = false;
             } else {
-                // para mi automata
                 if (estadoActual >= 0) {
-                    int estadoTemporal = siguienteEstado(estadoActual, tmp);
-                    System.out.println("Estado actual " + estadoActual + " caracter " + tmp + " transicion a " + estadoTemporal);
-                    nuevoToken.agregarHistorial(estadoActual, estadoTemporal, tmp);
-                    token += tmp;
-                    estadoActual = estadoTemporal;
+                    if (estadoActual == AFD.S3) {
+                        break;
+                    } else {
+                        int estadoTemporal = siguienteEstado(estadoActual, tmp);
+                        nuevoToken.agregarHistorial(estadoActual, estadoTemporal, tmp);
+                        token += tmp;
+                        estadoActual = estadoTemporal;
+                    }
                 } else {
                     estadoActual = 0;
-                    break;
                 }
-
             }
+            this.columna++;
             posicion++;
         }
-        System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
+        if (analizaEstados.estadoAceptado(estadoActual)) {
+            agregarNuevoToken(nuevoToken, token);
+            System.out.println(estadoActual);
+            System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
+        } else if (estadoActual == AFD.ESTADO_ERROR) {
+            posicion--;
+            CadenaError cadenaError = new CadenaError(token, fila, columna);
+            this.listCadenaErrors.add(cadenaError);
+        }
+    }
+
+    private void agregarNuevoToken(Token nuevoToken, String token) {
         nuevoToken.setTipo(this.analizaEstados.tipoTokenSegunEstado(estadoActual));
         nuevoToken.setValor(token);
+        nuevoToken.setFilaPosicion(fila);
+        nuevoToken.setColumnaPosicion(columna - 2);
         this.tokens.add(nuevoToken);
-
-        // verificar el estado de aceptación
     }
 
     private int siguienteEstado(int estadoActual, char caracter) {
@@ -118,4 +145,11 @@ public class AnalizadorLexico {
         return false;
     }
 
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public List<CadenaError> getListCadenaErrors() {
+        return listCadenaErrors;
+    }
 }

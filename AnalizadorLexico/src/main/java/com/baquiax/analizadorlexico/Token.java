@@ -14,7 +14,9 @@ import java.util.List;
  */
 public class Token {
 
+    //nombre
     private String tipo;
+    //lexema
     private String valor;
     private int filaPosicion;
     private int columnaPosicion;

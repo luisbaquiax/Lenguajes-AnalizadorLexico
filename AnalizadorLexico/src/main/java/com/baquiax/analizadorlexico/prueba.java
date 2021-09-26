@@ -17,7 +17,6 @@ public class prueba {
     public static void main(String[] args) {
         // TODO code application logic here
         AnalizadorLexico a = new AnalizadorLexico();
-        a.analizarTexto("22 33.ab . a ann 3.3\nque tal 1.0 0.2 0..");
+        a.analizarTexto("22 33.abacc .  [][][][]{}{}  3. a}   .....  3a 3.a}           a ann 3.3\nque tal 1.0 0.2 0..");
     }
-
 }

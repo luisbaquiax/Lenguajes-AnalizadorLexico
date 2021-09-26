@@ -23,7 +23,6 @@ public class AnalizadorCaracter {
         if (esDigito(caracter)) {
             posicion = 1;
         }
-
         if (caracter == '.') {
             posicion = 2;
         }
