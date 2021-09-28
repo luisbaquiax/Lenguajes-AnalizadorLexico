@@ -71,8 +71,14 @@ public class AnalizadorCaracter {
         return posicion;
     }
 
+    /**
+     * Verifica se el caraceter es una letra
+     *
+     * @param caracter
+     * @return
+     */
     public boolean esLetra(char caracter) {
-        for (char letra : AFD.ALFABETO.toCharArray()) {
+        for (char letra : AFD.LETRAS.toCharArray()) {
             if (String.valueOf(letra).equalsIgnoreCase(String.valueOf(caracter))) {
                 return true;
             }
@@ -80,10 +86,67 @@ public class AnalizadorCaracter {
         return false;
     }
 
+    /**
+     * Verifica si el caraceter es un signo de agrupación
+     *
+     * @param caracter
+     * @return
+     */
+    public boolean esSignoAgrupacion(String caracter) {
+        for (char letra : AFD.SIGNOS_AGRUPACION.toCharArray()) {
+            if (String.valueOf(letra).equalsIgnoreCase(caracter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verifica si el caraceter es un signo de puntuación
+     *
+     * @param caracter
+     * @return
+     */
+    public boolean esSignoPuntuacion(String caracter) {
+        for (char letra : AFD.SIGINOS_PUNTUACION.toCharArray()) {
+            if (String.valueOf(letra).equalsIgnoreCase(caracter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verifica si el caraceter es un signo de puntuación
+     *
+     * @param caracter
+     * @return
+     */
+    public boolean esOperador(String caracter) {
+        for (char letra : AFD.OPERADORES.toCharArray()) {
+            if (String.valueOf(letra).equalsIgnoreCase(caracter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verifica si el caraceter es un digito
+     *
+     * @param caracter
+     * @return
+     */
     public boolean esDigito(char caracter) {
         return (Character.isDigit(caracter));
     }
 
+    /**
+     * Verifica si el caraceter está definido en el alfabeto
+     *
+     * @param caracter
+     * @return
+     */
     public boolean caracterPermitido(char caracter) {
         for (char c : AFD.ALFABETO.toCharArray()) {
             if (String.valueOf(c).equalsIgnoreCase(String.valueOf(caracter))) {

@@ -14,6 +14,7 @@ public class CadenaError {
     private String valorError;
     private int fila;
     private int columan;
+    private String descripcion;
 
     public CadenaError() {
     }
@@ -22,11 +23,12 @@ public class CadenaError {
         this.valorError = valorError;
         this.fila = fila;
         this.columan = columan;
+        this.descripcion = "";
     }
 
     @Override
     public String toString() {
-        return "CadenaError{" + "valorError=" + valorError + ", fila=" + fila + ", columan=" + columan + '}';
+        return "CadenaError{" + "valorError=" + valorError + ", fila=" + fila + ", columan=" + columan + ", descripcion=" + descripcion + '}';
     }
 
     /**
@@ -48,6 +50,20 @@ public class CadenaError {
      */
     public int getColuman() {
         return columan;
+    }
+
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

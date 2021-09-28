@@ -10,5 +10,10 @@ package com.baquiax.analizadorlexico.tokenEnum;
  * @author luis
  */
 public enum TipoToken {
-    
+    OPERADOR,
+    SIGNO_AGRUPACION,
+    SIGNO_PUNTUACION,
+    IDENTIFICADOR,
+    ENTERO,
+    DECIMAL
 }

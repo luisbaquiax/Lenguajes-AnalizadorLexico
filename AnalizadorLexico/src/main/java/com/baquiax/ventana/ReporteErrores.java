@@ -54,7 +54,7 @@ public class ReporteErrores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Error", "Fila", "Columna"
+                "Error", "Fila", "Columna", "Descripción"
             }
         ));
         jScrollPane1.setViewportView(tablaErrores);
@@ -134,7 +134,8 @@ public class ReporteErrores extends javax.swing.JFrame {
             String[] datos = {
                 cadena.getValorError(),
                 cadena.getFila() + "",
-                cadena.getColuman() + ""
+                cadena.getColuman() + "",
+                cadena.getDescripcion()
             };
             model.addRow(datos);
         }
