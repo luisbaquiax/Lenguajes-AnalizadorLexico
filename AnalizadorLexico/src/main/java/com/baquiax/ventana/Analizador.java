@@ -119,6 +119,7 @@ public class Analizador extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(txtTexto);
 
+        labelFilaColumna.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFilaColumna.setText("Fila-columna");
 
         txtContadorFilas.setEditable(false);
@@ -132,16 +133,15 @@ public class Analizador extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1369, Short.MAX_VALUE)
-                .addGap(6, 6, 6))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelFilaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(579, 579, 579))
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelFilaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1369, Short.MAX_VALUE)))
+                .addGap(6, 6, 6))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,11 +250,6 @@ public class Analizador extends javax.swing.JFrame {
 
     private void menuReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteTokensActionPerformed
         // TODO add your handling code here:
-
-//        this.analizadorLexico.analizarTexto(this.txtTexto.getText());
-//        ReporteTokens to = new ReporteTokens(this.analizadorLexico, this);
-//        to.setVisible(true);
-//        super.setVisible(false);
         if (analizadorLexico.getListCadenaErrors().isEmpty()) {
             this.analizadorLexico.analizarTexto(this.txtTexto.getText());
             ReporteTokens to = new ReporteTokens(this.analizadorLexico, this);
@@ -268,10 +263,11 @@ public class Analizador extends javax.swing.JFrame {
 
     private void txtAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnalizarActionPerformed
         // TODO add your handling code here:
-        this.analizadorLexico = new AnalizadorLexico();
-        this.analizadorLexico.analizarTexto(this.txtTexto.getText());
         this.menuReporteErrores.setEnabled(true);
         this.menuReporteTokens.setEnabled(true);
+        this.analizadorLexico = new AnalizadorLexico();
+        this.analizadorLexico.analizarTexto(this.txtTexto.getText());
+
     }//GEN-LAST:event_txtAnalizarActionPerformed
 
     private void txtTextoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTextoMouseMoved

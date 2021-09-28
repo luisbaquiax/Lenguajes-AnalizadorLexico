@@ -35,8 +35,6 @@ public class AnalizadorLexico {
     }
 
     public void analizarTexto(String cadena) {
-
-        System.out.println("Cadena " + cadena);
         while (posicion < cadena.length()) {
             getToken(cadena);
         }

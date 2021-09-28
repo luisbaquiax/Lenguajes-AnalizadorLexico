@@ -28,6 +28,11 @@ public class ManejoArchivo {
     public ManejoArchivo() {
     }
 
+    /**
+     * Obtiene el path absoluto donde se guardará un nuevo archivo de texto
+     *
+     * @return
+     */
     public String pathChoserSave() {
         choser = new JFileChooser();
         choser.setAcceptAllFileFilterUsed(false);
@@ -38,6 +43,11 @@ public class ManejoArchivo {
         return null;
     }
 
+    /**
+     * Obtiene el path absoluto un archivo de texto
+     *
+     * @return
+     */
     public String pathChoserOpen() {
         choser = new JFileChooser();
         choser.setAcceptAllFileFilterUsed(false);
@@ -48,6 +58,12 @@ public class ManejoArchivo {
         return null;
     }
 
+    /**
+     * Escribe un archivo de texto en la ruta especificada
+     *
+     * @param ruta
+     * @param contenido
+     */
     public void escribirArchivodeTexto(String ruta, String contenido) {
         try {
             File file = new File(ruta);
@@ -65,6 +81,14 @@ public class ManejoArchivo {
         }
     }
 
+    /**
+     * Devuelve la información contenida en el archivo de texto
+     *
+     * @param path
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public String leerArchivo(String path) throws FileNotFoundException, IOException {
         File archivo = new File(path);
         FileReader leerArchivo = new FileReader(archivo.getAbsoluteFile());
