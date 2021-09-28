@@ -40,17 +40,6 @@ public class AnalizadorLexico {
         while (posicion < cadena.length()) {
             getToken(cadena);
         }
-
-        for (Token token : tokens) {
-            System.out.println(token.toString());
-            for (String s : token.getHistorial()) {
-                System.out.println(s.toString());
-            }
-        }
-        System.out.println("Errores");
-        for (CadenaError e : listCadenaErrors) {
-            System.out.println(e.toString());
-        }
     }
 
     public void getToken(String palabra) {
@@ -86,11 +75,10 @@ public class AnalizadorLexico {
         }
         if (analizaEstados.estadoAceptado(estadoActual)) {
             agregarNuevoToken(nuevoToken, token);
-            System.out.println(estadoActual);
-            System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
+//            System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
         } else if (estadoActual == AFD.ESTADO_ERROR) {
             posicion--;
-            CadenaError cadenaError = new CadenaError(token, fila, columna);
+            CadenaError cadenaError = new CadenaError(token, fila, columna - 1);
             this.listCadenaErrors.add(cadenaError);
         }
     }
@@ -99,7 +87,7 @@ public class AnalizadorLexico {
         nuevoToken.setTipo(this.analizaEstados.tipoTokenSegunEstado(estadoActual));
         nuevoToken.setValor(token);
         nuevoToken.setFilaPosicion(fila);
-        nuevoToken.setColumnaPosicion(columna - 2);
+        nuevoToken.setColumnaPosicion(columna);
         this.tokens.add(nuevoToken);
     }
 

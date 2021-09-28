@@ -7,6 +7,7 @@ package com.baquiax.analizadorlexico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -136,6 +137,13 @@ public class Token {
      * @param veces the veces to set
      */
     public void setVeces(int veces) {
+        this.veces = this.veces + veces;
+    }
+
+    /**
+     * @param veces the veces to set
+     */
+    public void reinicarVeces(int veces) {
         this.veces = veces;
     }
 

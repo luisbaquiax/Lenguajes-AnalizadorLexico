@@ -54,7 +54,7 @@ public class ReporteErrores extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Error", "Fila", "Title 3"
+                "Error", "Fila", "Columna"
             }
         ));
         jScrollPane1.setViewportView(tablaErrores);
