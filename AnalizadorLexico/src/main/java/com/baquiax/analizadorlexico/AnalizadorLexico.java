@@ -100,7 +100,7 @@ public class AnalizadorLexico {
                 this.listCadenaErrors.add(cadenaError);
             } else {
                 agregarNuevoToken(nuevoToken, token);
-                System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
+//                System.out.println("*********Termino en el estado " + this.analizaEstados.tipoTokenSegunEstado(estadoActual) + " token actual : " + token);
             }
 
         } else if (estadoActual == AFD.S4) {
@@ -115,6 +115,12 @@ public class AnalizadorLexico {
         }
     }
 
+    /**
+     * Agrega un nuevo token de acuerdo a su tipo
+     *
+     * @param nuevoToken
+     * @param token
+     */
     private void agregarNuevoToken(Token nuevoToken, String token) {
         if (this.analizadorCaracter.esOperador(token)) {
             nuevoToken.setTipo(tokenOperador.toString());
@@ -131,6 +137,13 @@ public class AnalizadorLexico {
         this.tokens.add(nuevoToken);
     }
 
+    /**
+     * Obtiene la posicion del caracter
+     *
+     * @param estadoActual
+     * @param caracter
+     * @return
+     */
     private int siguienteEstado(int estadoActual, char caracter) {
         int estadoSiguiente = -1;
         if (analizadorCaracter.getPosicionCaracter(caracter) >= 0
