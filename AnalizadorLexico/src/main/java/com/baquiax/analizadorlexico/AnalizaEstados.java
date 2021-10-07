@@ -24,6 +24,13 @@ public class AnalizaEstados {
         };
     }
 
+    /**
+     * *
+     * Revisa si el estado es aceptado
+     *
+     * @param estadoActual
+     * @return
+     */
     public boolean estadoAceptado(int estadoActual) {
         for (int estado : AFD.ESTADOS_ACEPTACION) {
             if (estado == estadoActual) {
@@ -32,7 +39,13 @@ public class AnalizaEstados {
         }
         return false;
     }
-    
+
+    /**
+     * Servirá para la descripción del token
+     *
+     * @param estadoActual
+     * @return
+     */
     public String tipoTokenSegunEstado(int estadoActual) {
         String tipo = "";
         switch (estadoActual) {

@@ -50,6 +50,11 @@ public class AnalizadorLexico {
         }
     }
 
+    /**
+     * Analiza cada caracter generando tokens
+     *
+     * @param palabra
+     */
     public void getToken(String palabra) {
         estadoActual = 0;
         boolean continuar = true;

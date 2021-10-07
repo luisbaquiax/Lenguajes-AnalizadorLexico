@@ -338,7 +338,9 @@ public class Analizador extends javax.swing.JFrame {
                 //Devuelve la ubicación actual del símbolo de intercalación. 
                 int pos = e.getDot();
                 try {
+                    //se obtiene el numero de fila donde se encuentra el cursor
                     int fila = txtTexto.getLineOfOffset(pos) + 1;
+                    //se obtiene la columna donde se encuentra el cursor
                     int col = pos - txtTexto.getLineStartOffset(fila - 1) + 1;
                     labelFilaColumna.setText("Fila: " + fila + " Columna: " + col);
                 } catch (BadLocationException exc) {

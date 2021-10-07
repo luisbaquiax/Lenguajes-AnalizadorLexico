@@ -14,6 +14,12 @@ public class AnalizadorCaracter {
     public AnalizadorCaracter() {
     }
 
+    /**
+     * Retorna la posción del caracter en la matriz transición
+     *
+     * @param caracter
+     * @return
+     */
     public int getPosicionCaracter(char caracter) {
         int posicion = -1;
 

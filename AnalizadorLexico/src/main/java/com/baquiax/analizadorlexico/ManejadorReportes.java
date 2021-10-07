@@ -20,6 +20,11 @@ public class ManejadorReportes {
         this.analizadorLexico = analizadorLexico;
     }
 
+    /**
+     * Retorna una lista con el conteo de lexemas
+     *
+     * @return
+     */
     public List<Token> listConteoLexemas() {
         reinicarRepeticion();
         List<Token> listLexemas = new ArrayList<>();
@@ -39,6 +44,11 @@ public class ManejadorReportes {
         return listLexemas;
     }
 
+    /**
+     * Devuelve una lista de tokens con el conteo de tokens
+     *
+     * @return
+     */
     public List<Token> listConteoTipoTokens() {
         reinicarRepeticion();
         List<Token> listLexemas = new ArrayList<>();
@@ -56,6 +66,13 @@ public class ManejadorReportes {
         return listLexemas;
     }
 
+    /**
+     * Verifica si existe el lexema en la lista de tokens
+     *
+     * @param lexema
+     * @param tokens
+     * @return
+     */
     private boolean existeLexema(Token lexema, List<Token> tokens) {
         for (Token a : tokens) {
             if ((a.getValor().equals(lexema.getValor()))) {
@@ -65,6 +82,13 @@ public class ManejadorReportes {
         return false;
     }
 
+    /**
+     * Verifica si existe el tipo-token en la lista de tokens
+     *
+     * @param lexema
+     * @param tokens
+     * @return
+     */
     private boolean existeTipoToken(Token lexema, List<Token> tokens) {
         for (Token a : tokens) {
             if ((a.getTipo().equals(lexema.getTipo()))) {
@@ -74,6 +98,9 @@ public class ManejadorReportes {
         return false;
     }
 
+    /**
+     * Reinicia la cantidad de veces de tipo-tokens o lexemas
+     */
     private void reinicarRepeticion() {
         for (Token s : this.analizadorLexico.getTokens()) {
             s.reinicarVeces(0);
