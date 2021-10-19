@@ -89,8 +89,10 @@ public class Analizador extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(txtTexto);
 
+        txtayuda.setBackground(new java.awt.Color(238, 238, 238));
         txtayuda.setColumns(20);
         txtayuda.setRows(5);
+        txtayuda.setEnabled(false);
         jScrollPane2.setViewportView(txtayuda);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
