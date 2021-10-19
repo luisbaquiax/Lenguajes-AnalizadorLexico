@@ -8,6 +8,7 @@ package com.baquiax.ventana;
 import com.baquiax.analizadorlexico.AnalizadorLexico;
 import com.baquiax.manejoArchivo.ManejoArchivo;
 import java.awt.BorderLayout;
+import java.awt.event.ComponentListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,10 +39,7 @@ public class Analizador extends javax.swing.JFrame {
         //ponerFilaColumanCursor();
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
-        jPanel1.setLayout(new BorderLayout());
-        panelLinea = new PanelLinea();
-        jPanel1.add(panelLinea, BorderLayout.WEST);
-        jPanel1.add(panelLinea.scrollPane, BorderLayout.CENTER);
+        ponerFilaColumanCursor();
     }
 
     /**
@@ -58,6 +56,10 @@ public class Analizador extends javax.swing.JFrame {
         labelFilaColumna = new javax.swing.JLabel();
         jTabbedEditor = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtTexto = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtayuda = new javax.swing.JTextArea();
         jToolBar1 = new javax.swing.JToolBar();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -78,15 +80,32 @@ public class Analizador extends javax.swing.JFrame {
         labelFilaColumna.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelFilaColumna.setText("Fila-columna");
 
+        txtTexto.setColumns(20);
+        txtTexto.setRows(5);
+        txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTextoKeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtTexto);
+
+        txtayuda.setColumns(20);
+        txtayuda.setRows(5);
+        jScrollPane2.setViewportView(txtayuda);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1415, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1372, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jTabbedEditor.addTab("Edición", jPanel1);
@@ -105,7 +124,7 @@ public class Analizador extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedEditor, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addComponent(jTabbedEditor)
                 .addGap(18, 18, 18)
                 .addComponent(labelFilaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -280,6 +299,11 @@ public class Analizador extends javax.swing.JFrame {
         guardarComo();
     }//GEN-LAST:event_menuGuardarCambiosMouseClicked
 
+    private void txtTextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyTyped
+        // TODO add your handling code here:
+        contadorFilas();
+    }//GEN-LAST:event_txtTextoKeyTyped
+
     private void guardarComo() {
         if ("".equals(path)) {
             String ruta = this.manejoArchivo.pathChoserSave();
@@ -295,8 +319,8 @@ public class Analizador extends javax.swing.JFrame {
      */
     private void contadorFilas() {
         int numeroFilas = 0;
-        for (int i = 0; i < this.panelLinea.pane.getText().length(); i++) {
-            if (this.panelLinea.pane.getText().charAt(i) == '\n') {
+        for (int i = 0; i < this.txtTexto.getText().length(); i++) {
+            if (this.txtTexto.getText().charAt(i) == '\n') {
                 numeroFilas++;
             }
         }
@@ -304,6 +328,30 @@ public class Analizador extends javax.swing.JFrame {
         for (int i = 0; i < numeroFilas + 1; i++) {
             ayuda += (i + 1) + "\n";
         }
+        this.txtayuda.setText(ayuda);
+    }
+
+
+    /**
+     * Pone la fila y columna en el que se encuentra el cursor
+     */
+    private void ponerFilaColumanCursor() {
+        txtTexto.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                //Devuelve la ubicación actual del símbolo de intercalación. 
+                int pos = e.getDot();
+                try {
+                    //se obtiene el numero de fila donde se encuentra el cursor
+                    int fila = txtTexto.getLineOfOffset(pos) + 1;
+                    //se obtiene la columna donde se encuentra el cursor
+                    int col = pos - txtTexto.getLineStartOffset(fila - 1) + 1;
+                    labelFilaColumna.setText("Fila: " + fila + " Columna: " + col);
+                } catch (BadLocationException exc) {
+                    System.out.println(exc);
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -311,6 +359,8 @@ public class Analizador extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedEditor;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
@@ -326,5 +376,7 @@ public class Analizador extends javax.swing.JFrame {
     private javax.swing.JMenu menuReportes;
     private javax.swing.JButton txtAnalizar;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextArea txtTexto;
+    private javax.swing.JTextArea txtayuda;
     // End of variables declaration//GEN-END:variables
 }
