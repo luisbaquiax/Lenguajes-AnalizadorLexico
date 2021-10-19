@@ -21,9 +21,8 @@ public class PanelLinea extends JPanel {
     JScrollPane scrollPane;
     JLabel text;
 
-    public PanelLinea(JLabel text) {
+    public PanelLinea() {
         super();
-        this.text = text;
         setMinimumSize(new Dimension(30, 30));
         setPreferredSize(new Dimension(30, 30));
         setMinimumSize(new Dimension(30, 30));
@@ -51,7 +50,6 @@ public class PanelLinea extends JPanel {
         int endline = doc.getDefaultRootElement().getElementIndex(fin) + 1; //pinta la linea numero 1
         int fontHeight = g.getFontMetrics(pane.getFont()).getHeight();	// fuente
         for (int line = startline, y = 0; line <= endline; line++, y += fontHeight) {
-            this.text.setText("fila " + line + " columna:");
             g.drawString(Integer.toString(line), 0, y);
         }
     }

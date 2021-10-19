@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -38,7 +39,7 @@ public class Analizador extends javax.swing.JFrame {
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
         jPanel1.setLayout(new BorderLayout());
-        panelLinea = new PanelLinea(labelFilaColumna);
+        panelLinea = new PanelLinea();
         jPanel1.add(panelLinea, BorderLayout.WEST);
         jPanel1.add(panelLinea.scrollPane, BorderLayout.CENTER);
     }
@@ -224,8 +225,9 @@ public class Analizador extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        //PalabrasFiltradas p = new PalabrasFiltradas(this.txtBuscar.getText(), this.txtTexto);
-        // p.setVisible(true);
+        JTextArea auxi = new JTextArea(this.panelLinea.pane.getText());
+        PalabrasFiltradas p = new PalabrasFiltradas(this.txtBuscar.getText(), auxi);
+        p.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void menuReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteErroresActionPerformed
@@ -289,26 +291,21 @@ public class Analizador extends javax.swing.JFrame {
     }
 
     /**
-     * Pone la fila y columna en el que se encuentra el cursor
+     * Cuenta las filas del texto
      */
-//    private void ponerFilaColumanCursor() {
-//        txtTexto.addCaretListener(new CaretListener() {
-//            @Override
-//            public void caretUpdate(CaretEvent e) {
-//                //Devuelve la ubicación actual del símbolo de intercalación. 
-//                int pos = e.getDot();
-//                try {
-//                    //se obtiene el numero de fila donde se encuentra el cursor
-//                    int fila = txtTexto.getLineOfOffset(pos) + 1;
-//                    //se obtiene la columna donde se encuentra el cursor
-//                    int col = pos - txtTexto.getLineStartOffset(fila - 1) + 1;
-//                    labelFilaColumna.setText("Fila: " + fila + " Columna: " + col);
-//                } catch (BadLocationException exc) {
-//                    System.out.println(exc);
-//                }
-//            }
-//        });
-//    }
+    private void contadorFilas() {
+        int numeroFilas = 0;
+        for (int i = 0; i < this.panelLinea.pane.getText().length(); i++) {
+            if (this.panelLinea.pane.getText().charAt(i) == '\n') {
+                numeroFilas++;
+            }
+        }
+        String ayuda = "";
+        for (int i = 0; i < numeroFilas + 1; i++) {
+            ayuda += (i + 1) + "\n";
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JMenuBar jMenuBar1;
