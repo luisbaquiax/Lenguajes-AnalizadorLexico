@@ -92,6 +92,7 @@ public class Analizador extends javax.swing.JFrame {
         txtayuda.setBackground(new java.awt.Color(238, 238, 238));
         txtayuda.setColumns(20);
         txtayuda.setRows(5);
+        txtayuda.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtayuda.setEnabled(false);
         jScrollPane2.setViewportView(txtayuda);
 
