@@ -31,8 +31,6 @@ public class Analizador extends javax.swing.JFrame {
     public Analizador() {
         initComponents();
         ponerFilaColumanCursor();
-        this.menuReporteErrores.setEnabled(false);
-        this.menuReporteTokens.setEnabled(false);
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
     }
@@ -263,8 +261,6 @@ public class Analizador extends javax.swing.JFrame {
 
     private void txtAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnalizarActionPerformed
         // TODO add your handling code here:
-        this.menuReporteErrores.setEnabled(true);
-        this.menuReporteTokens.setEnabled(true);
         this.analizadorLexico = new AnalizadorLexico();
         this.analizadorLexico.analizarTexto(this.txtTexto.getText());
 
