@@ -125,6 +125,7 @@ public class ReporteErrores extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
         this.analizador.setVisible(true);
+        this.analizador.repaint();
         super.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 

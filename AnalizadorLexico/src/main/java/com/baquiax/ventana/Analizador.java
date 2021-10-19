@@ -7,6 +7,7 @@ package com.baquiax.ventana;
 
 import com.baquiax.analizadorlexico.AnalizadorLexico;
 import com.baquiax.manejoArchivo.ManejoArchivo;
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,14 +26,21 @@ public class Analizador extends javax.swing.JFrame {
     private ManejoArchivo manejoArchivo;
     private String path;
 
+    //lineas
+    private PanelLinea panelLinea;
+
     /**
      * Creates new form Analizador
      */
     public Analizador() {
         initComponents();
-        ponerFilaColumanCursor();
+        //ponerFilaColumanCursor();
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
+        jPanel1.setLayout(new BorderLayout());
+        panelLinea = new PanelLinea(labelFilaColumna);
+        jPanel1.add(panelLinea, BorderLayout.WEST);
+        jPanel1.add(panelLinea.scrollPane, BorderLayout.CENTER);
     }
 
     /**
@@ -45,16 +53,16 @@ public class Analizador extends javax.swing.JFrame {
     private void initComponents() {
 
         jpanelContenedor = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        btnBuscar = new javax.swing.JButton();
-        txtBuscar = new javax.swing.JTextField();
-        txtAnalizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtTexto = new javax.swing.JTextArea();
         labelFilaColumna = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtContadorFilas = new javax.swing.JTextArea();
+        jTabbedEditor = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
+        txtAnalizar = new javax.swing.JButton();
+        jToolBar3 = new javax.swing.JToolBar();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuAbrirArchivo = new javax.swing.JMenuItem();
@@ -66,12 +74,54 @@ public class Analizador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        labelFilaColumna.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelFilaColumna.setText("Fila-columna");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1415, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 560, Short.MAX_VALUE)
+        );
+
+        jTabbedEditor.addTab("Edición", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedEditor)
+                .addContainerGap())
+            .addComponent(labelFilaColumna, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedEditor, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(labelFilaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jToolBar1.setRollover(true);
+        jToolBar1.add(txtBuscar);
+
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
+        jToolBar1.add(btnBuscar);
+
+        jToolBar2.setRollover(true);
 
         txtAnalizar.setText("Analizar texto");
         txtAnalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -79,94 +129,34 @@ public class Analizador extends javax.swing.JFrame {
                 txtAnalizarActionPerformed(evt);
             }
         });
+        jToolBar2.add(txtAnalizar);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(304, 304, 304)
-                .addComponent(txtAnalizar)
-                .addContainerGap(697, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAnalizar)))
-        );
-
-        txtTexto.setColumns(20);
-        txtTexto.setRows(5);
-        txtTexto.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                txtTextoMouseMoved(evt);
-            }
-        });
-        txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTextoKeyTyped(evt);
-            }
-        });
-        jScrollPane1.setViewportView(txtTexto);
-
-        labelFilaColumna.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelFilaColumna.setText("Fila-columna");
-
-        txtContadorFilas.setEditable(false);
-        txtContadorFilas.setBackground(new java.awt.Color(238, 238, 238));
-        txtContadorFilas.setColumns(20);
-        txtContadorFilas.setRows(5);
-        txtContadorFilas.setAutoscrolls(false);
-        jScrollPane2.setViewportView(txtContadorFilas);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelFilaColumna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1369, Short.MAX_VALUE)))
-                .addGap(6, 6, 6))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFilaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jToolBar3.setRollover(true);
 
         javax.swing.GroupLayout jpanelContenedorLayout = new javax.swing.GroupLayout(jpanelContenedor);
         jpanelContenedor.setLayout(jpanelContenedorLayout);
         jpanelContenedorLayout.setHorizontalGroup(
             jpanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpanelContenedorLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpanelContenedorLayout.setVerticalGroup(
             jpanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpanelContenedorLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jMenuBar1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
         menuFile.setText("File");
 
@@ -234,13 +224,13 @@ public class Analizador extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        PalabrasFiltradas p = new PalabrasFiltradas(this.txtBuscar.getText(), this.txtTexto);
-        p.setVisible(true);
+        //PalabrasFiltradas p = new PalabrasFiltradas(this.txtBuscar.getText(), this.txtTexto);
+        // p.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void menuReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteErroresActionPerformed
         // TODO add your handling code here:
-        this.analizadorLexico.analizarTexto(this.txtTexto.getText());
+        this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
         ReporteErrores re = new ReporteErrores(this.analizadorLexico, this);
         re.setVisible(true);
         super.setVisible(false);
@@ -249,7 +239,7 @@ public class Analizador extends javax.swing.JFrame {
     private void menuReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteTokensActionPerformed
         // TODO add your handling code here:
         if (analizadorLexico.getListCadenaErrors().isEmpty()) {
-            this.analizadorLexico.analizarTexto(this.txtTexto.getText());
+            this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
             ReporteTokens to = new ReporteTokens(this.analizadorLexico, this);
             to.setVisible(true);
             super.setVisible(false);
@@ -262,25 +252,16 @@ public class Analizador extends javax.swing.JFrame {
     private void txtAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnalizarActionPerformed
         // TODO add your handling code here:
         this.analizadorLexico = new AnalizadorLexico();
-        this.analizadorLexico.analizarTexto(this.txtTexto.getText());
+        this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
 
     }//GEN-LAST:event_txtAnalizarActionPerformed
-
-    private void txtTextoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTextoMouseMoved
-        // TODO add your handling code here:
-        contadorFilas();
-    }//GEN-LAST:event_txtTextoMouseMoved
-
-    private void txtTextoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyTyped
-        // TODO add your handling code here:
-        contadorFilas();
-    }//GEN-LAST:event_txtTextoKeyTyped
 
     private void menuAbrirArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAbrirArchivoActionPerformed
         try {
             // TODO add your handling code here:
             this.path = this.manejoArchivo.pathChoserOpen();
-            this.txtTexto.setText(manejoArchivo.leerArchivo(path));
+            this.panelLinea.pane.setText(manejoArchivo.leerArchivo(path));
+            jTabbedEditor.setTitleAt(0, this.path);
         } catch (IOException ex) {
             System.out.println("No se pudo abrir el archivo" + ex.getMessage());
         }
@@ -289,7 +270,7 @@ public class Analizador extends javax.swing.JFrame {
     private void menuGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarComoActionPerformed
         // TODO add your handling code here:
         String ruta = this.manejoArchivo.pathChoserSave();
-        this.manejoArchivo.escribirArchivodeTexto(ruta, txtTexto.getText());
+        this.manejoArchivo.escribirArchivodeTexto(ruta, this.panelLinea.pane.getText());
     }//GEN-LAST:event_menuGuardarComoActionPerformed
 
     private void menuGuardarCambiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuGuardarCambiosMouseClicked
@@ -300,58 +281,43 @@ public class Analizador extends javax.swing.JFrame {
     private void guardarComo() {
         if ("".equals(path)) {
             String ruta = this.manejoArchivo.pathChoserSave();
-            this.manejoArchivo.escribirArchivodeTexto(ruta, txtTexto.getText());
+            this.manejoArchivo.escribirArchivodeTexto(ruta, panelLinea.pane.getText());
         } else {
-            this.manejoArchivo.escribirArchivodeTexto(path, txtTexto.getText());
+            this.manejoArchivo.escribirArchivodeTexto(path, panelLinea.pane.getText());
         }
 
-    }
-
-    /**
-     * Cuenta las filas del texto
-     */
-    private void contadorFilas() {
-        int numeroFilas = 0;
-        for (int i = 0; i < this.txtTexto.getText().length(); i++) {
-            if (this.txtTexto.getText().charAt(i) == '\n') {
-                numeroFilas++;
-            }
-        }
-        String ayuda = "";
-        for (int i = 0; i < numeroFilas + 1; i++) {
-            ayuda += (i + 1) + "\n";
-        }
-        this.txtContadorFilas.setText(ayuda);
     }
 
     /**
      * Pone la fila y columna en el que se encuentra el cursor
      */
-    private void ponerFilaColumanCursor() {
-        txtTexto.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                //Devuelve la ubicación actual del símbolo de intercalación. 
-                int pos = e.getDot();
-                try {
-                    //se obtiene el numero de fila donde se encuentra el cursor
-                    int fila = txtTexto.getLineOfOffset(pos) + 1;
-                    //se obtiene la columna donde se encuentra el cursor
-                    int col = pos - txtTexto.getLineStartOffset(fila - 1) + 1;
-                    labelFilaColumna.setText("Fila: " + fila + " Columna: " + col);
-                } catch (BadLocationException exc) {
-                    System.out.println(exc);
-                }
-            }
-        });
-    }
+//    private void ponerFilaColumanCursor() {
+//        txtTexto.addCaretListener(new CaretListener() {
+//            @Override
+//            public void caretUpdate(CaretEvent e) {
+//                //Devuelve la ubicación actual del símbolo de intercalación. 
+//                int pos = e.getDot();
+//                try {
+//                    //se obtiene el numero de fila donde se encuentra el cursor
+//                    int fila = txtTexto.getLineOfOffset(pos) + 1;
+//                    //se obtiene la columna donde se encuentra el cursor
+//                    int col = pos - txtTexto.getLineStartOffset(fila - 1) + 1;
+//                    labelFilaColumna.setText("Fila: " + fila + " Columna: " + col);
+//                } catch (BadLocationException exc) {
+//                    System.out.println(exc);
+//                }
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedEditor;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JPanel jpanelContenedor;
     private javax.swing.JLabel labelFilaColumna;
     private javax.swing.JMenuItem menuAbrirArchivo;
@@ -363,7 +329,5 @@ public class Analizador extends javax.swing.JFrame {
     private javax.swing.JMenu menuReportes;
     private javax.swing.JButton txtAnalizar;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextArea txtContadorFilas;
-    private javax.swing.JTextArea txtTexto;
     // End of variables declaration//GEN-END:variables
 }

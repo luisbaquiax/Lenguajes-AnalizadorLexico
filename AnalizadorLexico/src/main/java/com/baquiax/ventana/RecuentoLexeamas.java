@@ -134,6 +134,7 @@ public class RecuentoLexeamas extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
         this.reporteTokens.setVisible(true);
+        this.reporteTokens.repaint();
         super.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
