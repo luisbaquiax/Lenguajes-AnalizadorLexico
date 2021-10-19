@@ -36,10 +36,9 @@ public class Analizador extends javax.swing.JFrame {
      */
     public Analizador() {
         initComponents();
-        //ponerFilaColumanCursor();
+        ponerFilaColumanCursor();
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
-        ponerFilaColumanCursor();
     }
 
     /**
@@ -89,6 +88,7 @@ public class Analizador extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(txtTexto);
 
+        txtayuda.setEditable(false);
         txtayuda.setBackground(new java.awt.Color(238, 238, 238));
         txtayuda.setColumns(20);
         txtayuda.setRows(5);

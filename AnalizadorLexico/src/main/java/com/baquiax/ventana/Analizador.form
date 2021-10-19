@@ -219,6 +219,7 @@
                       <SubComponents>
                         <Component class="javax.swing.JTextArea" name="txtayuda">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ee" green="ee" red="ee" type="rgb"/>
                             </Property>
