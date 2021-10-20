@@ -123,8 +123,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtBuscar" min="-2" pref="202" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" pref="94" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="304" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" pref="107" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="291" max="-2" attributes="0"/>
                       <Component id="txtAnalizar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="697" max="32767" attributes="0"/>
                   </Group>
