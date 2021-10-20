@@ -40,7 +40,7 @@ public class ManejoArchivo {
         if (seleccionado == APPROVE_OPTION) {
             return (choser.getSelectedFile().getAbsolutePath());
         }
-        return null;
+        return "";
     }
 
     /**
@@ -55,7 +55,7 @@ public class ManejoArchivo {
         if (seleccionado == APPROVE_OPTION) {
             return (choser.getSelectedFile().getAbsolutePath());
         }
-        return null;
+        return "";
     }
 
     /**

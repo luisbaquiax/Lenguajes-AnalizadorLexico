@@ -3,6 +3,8 @@ package com.baquiax.ventana;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
@@ -17,15 +19,15 @@ import javax.swing.text.Document;
  */
 public class PanelLinea extends JPanel {
 
-    JTextPane pane;
-    JScrollPane scrollPane;
-    JLabel text;
+    private JTextPane pane;
+    private JScrollPane scrollPane;
 
     public PanelLinea() {
         super();
         setMinimumSize(new Dimension(30, 30));
         setPreferredSize(new Dimension(30, 30));
         setMinimumSize(new Dimension(30, 30));
+
         pane = new JTextPane() { // se necesita pintar las lineas en el panel 
             public void paint(Graphics g) {
                 super.paint(g);
@@ -52,6 +54,14 @@ public class PanelLinea extends JPanel {
         for (int line = startline, y = 0; line <= endline; line++, y += fontHeight) {
             g.drawString(Integer.toString(line), 0, y);
         }
+    }
+
+    public JTextPane getPane() {
+        return pane;
+    }
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
     }
 
 }

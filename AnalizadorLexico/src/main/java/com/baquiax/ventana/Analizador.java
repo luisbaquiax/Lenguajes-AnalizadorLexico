@@ -8,14 +8,14 @@ package com.baquiax.ventana;
 import com.baquiax.analizadorlexico.AnalizadorLexico;
 import com.baquiax.manejoArchivo.ManejoArchivo;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -35,13 +35,13 @@ public class Analizador extends javax.swing.JFrame {
      */
     public Analizador() {
         initComponents();
-        //ponerFilaColumanCursor();
         this.manejoArchivo = new ManejoArchivo();
         this.path = "";
         jPanel1.setLayout(new BorderLayout());
         panelLinea = new PanelLinea();
         jPanel1.add(panelLinea, BorderLayout.WEST);
-        jPanel1.add(panelLinea.scrollPane, BorderLayout.CENTER);
+        jPanel1.add(panelLinea.getScrollPane(), BorderLayout.CENTER);
+        posicionPuntero();
     }
 
     /**
@@ -105,7 +105,7 @@ public class Analizador extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedEditor, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addComponent(jTabbedEditor)
                 .addGap(18, 18, 18)
                 .addComponent(labelFilaColumna, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -143,7 +143,7 @@ public class Analizador extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpanelContenedorLayout.setVerticalGroup(
@@ -151,8 +151,8 @@ public class Analizador extends javax.swing.JFrame {
             .addGroup(jpanelContenedorLayout.createSequentialGroup()
                 .addGroup(jpanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -225,14 +225,14 @@ public class Analizador extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        JTextArea auxi = new JTextArea(this.panelLinea.pane.getText());
+        JTextArea auxi = new JTextArea(this.panelLinea.getPane().getText());
         PalabrasFiltradas p = new PalabrasFiltradas(this.txtBuscar.getText(), auxi);
         p.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void menuReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteErroresActionPerformed
         // TODO add your handling code here:
-        this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
+        this.analizadorLexico.analizarTexto(this.panelLinea.getPane().getText());
         ReporteErrores re = new ReporteErrores(this.analizadorLexico, this);
         re.setVisible(true);
         super.setVisible(false);
@@ -241,7 +241,7 @@ public class Analizador extends javax.swing.JFrame {
     private void menuReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteTokensActionPerformed
         // TODO add your handling code here:
         if (analizadorLexico.getListCadenaErrors().isEmpty()) {
-            this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
+            this.analizadorLexico.analizarTexto(this.panelLinea.getPane().getText());
             ReporteTokens to = new ReporteTokens(this.analizadorLexico, this);
             to.setVisible(true);
             super.setVisible(false);
@@ -254,7 +254,7 @@ public class Analizador extends javax.swing.JFrame {
     private void txtAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnalizarActionPerformed
         // TODO add your handling code here:
         this.analizadorLexico = new AnalizadorLexico();
-        this.analizadorLexico.analizarTexto(this.panelLinea.pane.getText());
+        this.analizadorLexico.analizarTexto(this.panelLinea.getPane().getText());
 
     }//GEN-LAST:event_txtAnalizarActionPerformed
 
@@ -262,7 +262,7 @@ public class Analizador extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             this.path = this.manejoArchivo.pathChoserOpen();
-            this.panelLinea.pane.setText(manejoArchivo.leerArchivo(path));
+            this.panelLinea.getPane().setText(manejoArchivo.leerArchivo(path));
             jTabbedEditor.setTitleAt(0, this.path);
         } catch (IOException ex) {
             System.out.println("No se pudo abrir el archivo" + ex.getMessage());
@@ -272,7 +272,7 @@ public class Analizador extends javax.swing.JFrame {
     private void menuGuardarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGuardarComoActionPerformed
         // TODO add your handling code here:
         String ruta = this.manejoArchivo.pathChoserSave();
-        this.manejoArchivo.escribirArchivodeTexto(ruta, this.panelLinea.pane.getText());
+        this.manejoArchivo.escribirArchivodeTexto(ruta, this.panelLinea.getPane().getText());
     }//GEN-LAST:event_menuGuardarComoActionPerformed
 
     private void menuGuardarCambiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuGuardarCambiosMouseClicked
@@ -283,27 +283,41 @@ public class Analizador extends javax.swing.JFrame {
     private void guardarComo() {
         if ("".equals(path)) {
             String ruta = this.manejoArchivo.pathChoserSave();
-            this.manejoArchivo.escribirArchivodeTexto(ruta, panelLinea.pane.getText());
+            this.manejoArchivo.escribirArchivodeTexto(ruta, panelLinea.getPane().getText());
         } else {
-            this.manejoArchivo.escribirArchivodeTexto(path, panelLinea.pane.getText());
+            this.manejoArchivo.escribirArchivodeTexto(path, panelLinea.getPane().getText());
         }
 
     }
 
-    /**
-     * Cuenta las filas del texto
-     */
-    private void contadorFilas() {
-        int numeroFilas = 0;
-        for (int i = 0; i < this.panelLinea.pane.getText().length(); i++) {
-            if (this.panelLinea.pane.getText().charAt(i) == '\n') {
-                numeroFilas++;
+    public void ponerIconoButton(JButton button, String ruta) {
+        ImageIcon icono1 = new ImageIcon(ruta);
+        button.setIcon(new ImageIcon(icono1.getImage().getScaledInstance(button.getSize().width,
+                button.getSize().height, Image.SCALE_SMOOTH)));
+    }
+
+    private void posicionPuntero() {
+        panelLinea.getPane().addCaretListener(new CaretListener() {
+
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                int pos = e.getDot();
+                int fila = 1, columna = 0;
+                int ultimalinea = -1;
+                String text = panelLinea.getPane().getText().replaceAll("\r", "");
+
+                for (int i = 0; i < pos; i++) {
+                    if (text.charAt(i) == 10) {
+                        fila++;
+                        ultimalinea = i;
+                    }
+                }
+
+                columna = pos - ultimalinea;
+                labelFilaColumna.setText("Fila: " + fila + " Columna: " + columna);
             }
-        }
-        String ayuda = "";
-        for (int i = 0; i < numeroFilas + 1; i++) {
-            ayuda += (i + 1) + "\n";
-        }
+        });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
